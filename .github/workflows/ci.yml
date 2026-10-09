@@ -1,10 +1,11 @@
 name: CI/CD
 
-# (1) Quand ? À chaque pull request, et à chaque push sur main.
+# (1) Quand ? À chaque push, sur n'importe quelle branche.
+# Le résultat s'affiche aussi dans la pull request, puisqu'il porte sur le même commit.
+# Pas de déclencheur pull_request en plus : sinon chaque push lancerait le pipeline deux fois.
 on:
-  pull_request:
   push:
-    branches: [main]
+    branches: ["**"]
   workflow_dispatch:
 
 # (2) Avec quels droits ? Lecture seule par défaut.
