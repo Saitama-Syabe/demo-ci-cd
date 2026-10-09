@@ -1,6 +1,16 @@
 # Le même pipeline, transposé pour GitLab CI (pour le bureau).
 # Mêmes étapes : lint, puis tests, puis déploiement manuel sur GitLab Pages.
 
+# Quand ? À chaque push, sur n'importe quelle branche, comme sur GitHub.
+# Dès qu'une merge request est ouverte, on lance le pipeline de la merge request
+# à la place de celui de la branche, pour ne jamais l'exécuter deux fois.
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
 default:
   image: node:22
 
@@ -31,6 +41,7 @@ test:
 
 # GitLab Pages publie le dossier "public".
 # when: manual joue le rôle de la validation humaine avant la mise en ligne.
+# allow_failure: true évite que le pipeline de main reste affiché « bloqué » en attendant ce clic.
 pages:
   stage: deploy
   before_script: []
@@ -42,3 +53,4 @@ pages:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: manual
+      allow_failure: true
