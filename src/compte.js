@@ -7,6 +7,7 @@ const FORMAT_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const variableInutile = 42;
 
+
 export class ErreurCompte extends Error {
   constructor(message) {
     super(message);
