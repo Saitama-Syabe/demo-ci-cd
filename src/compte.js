@@ -1,7 +1,7 @@
 // Règles métier de la création de compte.
 // C'est ce fichier que l'on modifie pendant la démo pour faire passer le pipeline au rouge.
 
-export const LONGUEUR_MIN_MOT_DE_PASSE = 8;
+export const LONGUEUR_MIN_MOT_DE_PASSE = 6;
 
 const FORMAT_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
