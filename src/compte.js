@@ -5,9 +5,6 @@ export const LONGUEUR_MIN_MOT_DE_PASSE = 8;
 
 const FORMAT_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const variableInutile = 42;
-
-
 export class ErreurCompte extends Error {
   constructor(message) {
     super(message);
