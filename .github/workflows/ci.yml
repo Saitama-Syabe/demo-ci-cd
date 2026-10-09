@@ -1,0 +1,65 @@
+name: CI/CD
+
+# (1) Quand ? À chaque pull request, et à chaque push sur main.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# (2) Avec quels droits ? Lecture seule par défaut.
+permissions:
+  contents: read
+
+jobs:
+  # (3) Étape 1 : le lint, le filet le plus rapide.
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  # (4) Étape 2 : les tests, uniquement si le lint est vert.
+  test:
+    name: test
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+  # (5) Étape 3 : le déploiement sur GitHub Pages.
+  # Uniquement après un push sur main, et après approbation (règle de l'environnement github-pages).
+  deploy:
+    name: deploy
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: src
+      - id: deploiement
+        uses: actions/deploy-pages@v4

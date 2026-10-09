@@ -1,0 +1,23 @@
+{
+  "name": "demo-ci-cd",
+  "version": "1.0.0",
+  "description": "Démo CI/CD avec GitHub Actions : formulaire de création de compte, lint, tests et déploiement automatisé",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serveur.js",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "jsdom": "^29.1.1",
+    "vitest": "^5.0.3"
+  }
+}

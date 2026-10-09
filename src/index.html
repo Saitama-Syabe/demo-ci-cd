@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Création de compte · Démo CI/CD</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="carte">
+      <img class="logo" src="logo-syabe.png" alt="Syabe Technologies" />
+      <p class="surtitre">DÉMO CI/CD · GITHUB ACTIONS</p>
+      <h1>Créer un compte</h1>
+
+      <form id="form-compte" novalidate>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="prenom@exemple.com" autocomplete="off" />
+
+        <label for="motDePasse">Mot de passe</label>
+        <input id="motDePasse" name="motDePasse" type="password" placeholder="8 caractères minimum" />
+
+        <button type="submit">Créer le compte</button>
+      </form>
+
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+      <p class="pied">Comptes enregistrés : <strong id="compteur">0</strong></p>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
